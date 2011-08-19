@@ -157,15 +157,23 @@ enum TimeConstants
 enum AccountTypes
 {
     SEC_PLAYER         = 0,
-	SEC_DONOR_ONE	   = 1,
-	SEC_DONOR_TWO	   = 2,
-    SEC_MODERATOR      = 3,
-	SEC_TRIAL_GM	   = 4,
-    SEC_GAMEMASTER     = 5,
-	SEC_RESERVED	   = 6,
-	SEC_HEAD_GM		   = 7,
-    SEC_ADMINISTRATOR  = 8,
-    SEC_CONSOLE        = 9              // must be always last in list, accounts must have less security level always also
+
+    // Introduction
+    ACC_IN_INTRO, // not used
+    ACC_OUT_INTRO, // not used
+
+    // Comatose
+    ACC_COMA_LOCKED, // not used
+    ACC_COMA_UNLOCKED, // not used
+
+    // Veza
+    ACC_VEZA_LOCKED, // not used
+    ACC_VEZA_UNLOCKED, // not used
+
+    SEC_MODERATOR,
+    SEC_GAMEMASTER,
+    SEC_ADMINISTRATOR,
+    SEC_CONSOLE,                                          // must be always last in list, accounts must have less security level always also
 };
 
 enum LocaleConstant

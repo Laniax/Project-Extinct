@@ -103,7 +103,6 @@ enum WorldBoolConfigs
     CONFIG_INSTANT_TAXI,
     CONFIG_INSTANCE_IGNORE_LEVEL,
     CONFIG_INSTANCE_IGNORE_RAID,
-	CONFIG_EXTERNAL_MAIL,
     CONFIG_CAST_UNSTUCK,
     CONFIG_GM_LOG_TRADE,
     CONFIG_ALLOW_GM_GROUP,
@@ -159,7 +158,6 @@ enum WorldBoolConfigs
     CONFIG_ALLOW_TICKETS,
     CONFIG_DBC_ENFORCE_ITEM_ATTRIBUTES,
     CONFIG_PRESERVE_CUSTOM_CHANNELS,
-    CONFIG_ANTICHEAT_ENABLE,
     BOOL_CONFIG_VALUE_COUNT
 };
 
@@ -228,11 +226,9 @@ enum WorldIntConfigs
     CONFIG_GM_WHISPERING_TO,
     CONFIG_GM_LEVEL_IN_GM_LIST,
     CONFIG_GM_LEVEL_IN_WHO_LIST,
-    CONFIG_GM_LEVEL_ALLOW_ACHIEVEMENTS,
     CONFIG_START_GM_LEVEL,
     CONFIG_GROUP_VISIBILITY,
     CONFIG_MAIL_DELIVERY_DELAY,
-	CONFIG_EXTERNAL_MAIL_INTERVAL,
     CONFIG_UPTIME_UPDATE,
     CONFIG_SKILL_CHANCE_ORANGE,
     CONFIG_SKILL_CHANCE_YELLOW,
@@ -308,9 +304,7 @@ enum WorldIntConfigs
     CONFIG_DB_PING_INTERVAL,
     CONFIG_PRESERVE_CUSTOM_CHANNEL_DURATION,
     CONFIG_PERSISTENT_CHARACTER_CLEAN_FLAGS,
-    CONFIG_ANTICHEAT_REPORTS_INGAME_NOTIFICATION,
     CONFIG_MAX_INSTANCES_PER_HOUR,
-    CONFIG_ANTICHEAT_DETECTIONS_ENABLED,
     INT_CONFIG_VALUE_COUNT
 };
 
@@ -621,12 +615,12 @@ class World
         void LoadConfigSettings(bool reload = false);
 
         void SendWorldText(int32 string_id, ...);
-        void SendGlobalText(const char* text, WorldSession *self);
+        void SendGlobalText(const char* text, WorldSession* self);
         void SendGMText(int32 string_id, ...);
-        void SendGlobalMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
-        void SendGlobalGMMessage(WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
-        void SendZoneMessage(uint32 zone, WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
-        void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
+        void SendGlobalMessage(WorldPacket* packet, WorldSession* self = 0, uint32 team = 0);
+        void SendGlobalGMMessage(WorldPacket* packet, WorldSession* self = 0, uint32 team = 0);
+        void SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self = 0, uint32 team = 0);
+        void SendZoneText(uint32 zone, const char *text, WorldSession* self = 0, uint32 team = 0);
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
 
         /// Are we in the middle of a shutdown?
@@ -761,7 +755,6 @@ class World
         time_t m_startTime;
         time_t m_gameTime;
         IntervalTimer m_timers[WUPDATE_COUNT];
-		IntervalTimer extmail_timer;
         time_t mail_timer;
         time_t mail_timer_expires;
         uint32 m_updateTime, m_updateTimeSum;

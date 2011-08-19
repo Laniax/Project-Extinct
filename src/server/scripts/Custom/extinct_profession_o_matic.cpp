@@ -21,10 +21,10 @@ enum SpellIDs{
     SPELL_VISUAL                = 43659,
 };
 
-class mall_proff : public GameObjectScript
+class extinct_profession_o_matic : public GameObjectScript
 {
 public:
-    mall_proff() : GameObjectScript("mall_proff") { }
+    extinct_profession_o_matic() : GameObjectScript("mall_proff") { }
 
     #define GOSSIP_TEXT_ALCHEMY             "Alchemy"
     #define GOSSIP_TEXT_BLACKSMITHING       "Blacksmithing"
@@ -157,7 +157,9 @@ public:
             {
                 Field* fields = result->Fetch();
                 uint32 recipe  = fields[0].GetUInt32();
-                pPlayer->learnSpell(recipe, false);
+
+                if (recipe)
+                    pPlayer->learnSpell(recipe, false);
             }
             while (result->NextRow());
 
@@ -171,7 +173,7 @@ public:
     }
 };
 
-void AddSC_mall_proff()
+void AddSC_extinct_profession_o_matic()
 {
-    new mall_proff;
+    new extinct_profession_o_matic;
 }

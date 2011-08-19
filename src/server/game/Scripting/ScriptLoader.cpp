@@ -16,7 +16,6 @@
  */
 
 #include "ScriptLoader.h"
-#include "AnticheatMgr.h"
 
 //examples
 void AddSC_example_creature();
@@ -44,7 +43,6 @@ void AddSC_example_spell_scripts();
 void AddSC_SmartSCripts();
 
 //Commands
-void AddSC_anticheat_commandscript();
 void AddSC_account_commandscript();
 void AddSC_achievement_commandscript();
 void AddSC_debug_commandscript();
@@ -61,13 +59,12 @@ void AddSC_reload_commandscript();
 void AddSC_tele_commandscript();
 void AddSC_titles_commandscript();
 void AddSC_wp_commandscript();
+void AddSC_gps_commandscript();
 
 #ifdef SCRIPTS
 //world
 void AddSC_areatrigger_scripts();
-void AddSC_boss_emeriss();
-void AddSC_boss_taerar();
-void AddSC_boss_ysondre();
+void AddSC_emerald_dragons();
 void AddSC_generic_creature();
 void AddSC_go_scripts();
 void AddSC_guards();
@@ -484,6 +481,11 @@ void AddSC_boss_sindragosa();
 void AddSC_icecrown_citadel_teleport();
 void AddSC_instance_icecrown_citadel();
 void AddSC_icecrown_citadel();
+void AddSC_instance_ruby_sanctum();      // Ruby Sanctum
+void AddSC_ruby_sanctum();
+void AddSC_boss_baltharus_the_warborn();
+void AddSC_boss_saviana_ragefire();
+void AddSC_boss_general_zarithrian();
 
 void AddSC_dalaran();
 void AddSC_borean_tundra();
@@ -592,13 +594,13 @@ void AddSC_outdoorpvp_zm();
 // player
 void AddSC_chat_log();
 
-// Extinct
-void AddSC_mall_dummy_mage();
-void AddSC_mall_proff();
-void AddSC_mall_pets();
-void AddSC_keep_out();
-void AddSC_extinct_pvp();
-void AddSC_Ashenvale_scripts();
+// extinct
+void AddSC_extinct_loginscript();
+void AddSC_extinct_ashenvale_scripts();
+void AddSC_extinct_mall_petcages();
+void AddSC_extinct_profession_o_matic();
+void AddSC_extinct_mall_npcs();
+void AddSC_extinct_restrictions();
 
 #endif
 
@@ -608,7 +610,6 @@ void AddScripts()
     AddSpellScripts();
     AddSC_SmartSCripts();
     AddCommandScripts();
-    sAnticheatMgr->StartScripts();
 #ifdef SCRIPTS
     AddWorldScripts();
     AddEasternKingdomsScripts();
@@ -650,7 +651,6 @@ void AddSpellScripts()
 
 void AddCommandScripts()
 {
-    AddSC_anticheat_commandscript();
     AddSC_account_commandscript();
     AddSC_achievement_commandscript();
     AddSC_debug_commandscript();
@@ -667,15 +667,14 @@ void AddCommandScripts()
     AddSC_tele_commandscript();
     AddSC_titles_commandscript();
     AddSC_wp_commandscript();
+    AddSC_gps_commandscript();
 }
 
 void AddWorldScripts()
 {
 #ifdef SCRIPTS
     AddSC_areatrigger_scripts();
-    AddSC_boss_emeriss();
-    AddSC_boss_taerar();
-    AddSC_boss_ysondre();
+    AddSC_emerald_dragons();
     AddSC_generic_creature();
     AddSC_go_scripts();
     AddSC_guards();
@@ -1191,6 +1190,11 @@ void AddNorthrendScripts()
     AddSC_icecrown_citadel_teleport();
     AddSC_instance_icecrown_citadel();
     AddSC_icecrown_citadel();
+    AddSC_instance_ruby_sanctum();      // Ruby Sanctum
+    AddSC_ruby_sanctum();
+    AddSC_boss_baltharus_the_warborn();
+    AddSC_boss_saviana_ragefire();
+    AddSC_boss_general_zarithrian();
 
     AddSC_dalaran();
     AddSC_borean_tundra();
@@ -1233,12 +1237,13 @@ void AddCustomScripts()
 {
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
- // Extinct
- AddSC_mall_dummy_mage();
- AddSC_mall_proff();
- AddSC_mall_pets();
- AddSC_keep_out();
- AddSC_extinct_pvp();
- AddSC_Ashenvale_scripts();
+
+ AddSC_extinct_loginscript();
+ AddSC_extinct_ashenvale_scripts();
+ AddSC_extinct_mall_petcages();
+ AddSC_extinct_profession_o_matic();
+ AddSC_extinct_mall_npcs();
+ AddSC_extinct_restrictions();
+
 #endif
 }

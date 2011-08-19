@@ -136,7 +136,7 @@ class boss_ick : public CreatureScript
 
         struct boss_ickAI : public BossAI
         {
-            boss_ickAI(Creature *creature) : BossAI(creature, DATA_ICK), _vehicle(creature->GetVehicleKit())
+            boss_ickAI(Creature* creature) : BossAI(creature, DATA_ICK), _vehicle(creature->GetVehicleKit())
             {
                 ASSERT(_vehicle);
             }
@@ -160,7 +160,7 @@ class boss_ick : public CreatureScript
                 return ObjectAccessor::GetCreature(*me, instance->GetData64(DATA_KRICK));
             }
 
-            void EnterCombat(Unit * /*who*/)
+            void EnterCombat(Unit* /*who*/)
             {
                 if (Creature* krick = GetKrick())
                     DoScriptText(SAY_KRICK_AGGRO, krick);
@@ -179,7 +179,7 @@ class boss_ick : public CreatureScript
                 ScriptedAI::EnterEvadeMode();
             }
 
-            void JustDied(Unit* /*pKiller*/)
+            void JustDied(Unit* /*killer*/)
             {
                 if (Creature* krick = GetKrick())
                 {
@@ -610,7 +610,7 @@ class spell_exploding_orb_hasty_grow : public SpellScriptLoader
 
             void Register()
             {
-                AfterEffectApply += AuraEffectApplyFn(spell_exploding_orb_hasty_grow_AuraScript::OnStackChange, EFFECT_0, SPELL_AURA_MOD_SCALE, AURA_EFFECT_HANDLE_REAL);
+                AfterEffectApply += AuraEffectApplyFn(spell_exploding_orb_hasty_grow_AuraScript::OnStackChange, EFFECT_0, SPELL_AURA_MOD_SCALE, AURA_EFFECT_HANDLE_REAPPLY);
             }
         };
 

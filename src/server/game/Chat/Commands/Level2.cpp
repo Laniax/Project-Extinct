@@ -189,7 +189,7 @@ bool ChatHandler::HandleItemMoveCommand(const char* args)
 //demorph player or unit
 bool ChatHandler::HandleDeMorphCommand(const char* /*args*/)
 {
-    Unit *target = getSelectedUnit();
+    Unit* target = getSelectedUnit();
     if (!target)
         target = m_session->GetPlayer();
 
@@ -441,10 +441,10 @@ bool ChatHandler::HandleCharacterChangeFactionCommand(const char * args)
     uint64 target_guid;
     std::string target_name;
 
-    if(!extractPlayerTarget((char*)args, &target, &target_guid, &target_name))
+    if (!extractPlayerTarget((char*)args, &target, &target_guid, &target_name))
         return false;
 
-    if(target)
+    if (target)
     {
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER, GetNameLink(target).c_str());
@@ -468,10 +468,10 @@ bool ChatHandler::HandleCharacterChangeRaceCommand(const char * args)
     Player* target;
     uint64 target_guid;
     std::string target_name;
-    if(!extractPlayerTarget((char*)args, &target, &target_guid, &target_name))
+    if (!extractPlayerTarget((char*)args, &target, &target_guid, &target_name))
         return false;
 
-    if(target)
+    if (target)
     {
         // TODO : add text into database
         PSendSysMessage(LANG_CUSTOMIZE_PLAYER, GetNameLink(target).c_str());
@@ -611,7 +611,7 @@ bool ChatHandler::HandleLookupPlayerIpCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (ip);
+    LoginDatabase.EscapeString (ip);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id, username FROM account WHERE last_ip = '%s'", ip.c_str ());
 
@@ -630,7 +630,7 @@ bool ChatHandler::HandleLookupPlayerAccountCommand(const char* args)
     if (!AccountMgr::normalizeString (account))
         return false;
 
-    LoginDatabase.escape_string (account);
+    LoginDatabase.EscapeString (account);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id, username FROM account WHERE username = '%s'", account.c_str ());
 
@@ -647,7 +647,7 @@ bool ChatHandler::HandleLookupPlayerEmailCommand(const char* args)
     char* limit_str = strtok (NULL, " ");
     int32 limit = limit_str ? atoi (limit_str) : -1;
 
-    LoginDatabase.escape_string (email);
+    LoginDatabase.EscapeString (email);
 
     QueryResult result = LoginDatabase.PQuery ("SELECT id, username FROM account WHERE email = '%s'", email.c_str ());
 
@@ -740,7 +740,7 @@ bool ChatHandler::HandleWaterwalkCommand(const char* args)
     if (!*args)
         return false;
 
-    Player *player = getSelectedPlayer();
+    Player* player = getSelectedPlayer();
 
     if (!player)
     {
@@ -771,7 +771,7 @@ bool ChatHandler::HandleWaterwalkCommand(const char* args)
 
 bool ChatHandler::HandleCreatePetCommand(const char* /*args*/)
 {
-    Player *player = m_session->GetPlayer();
+    Player* player = m_session->GetPlayer();
     Creature *creatureTarget = getSelectedCreature();
 
     if (!creatureTarget || creatureTarget->isPet() || creatureTarget->GetTypeId() == TYPEID_PLAYER)
@@ -910,29 +910,6 @@ bool ChatHandler::HandlePetUnlearnCommand(const char *args)
     else
         PSendSysMessage("Pet doesn't have that spell");
 
-    return true;
-}
-
-bool ChatHandler::HandlePetTpCommand(const char *args)
-{
-    if (!*args)
-        return false;
-
-    Player *plr = m_session->GetPlayer();
-    Pet *pet = plr->GetPet();
-
-    if (!pet)
-    {
-        PSendSysMessage("You have no pet");
-        SetSentErrorMessage(true);
-        return false;
-    }
-
-    uint32 tp = atol(args);
-
-    //pet->SetTP(tp);
-
-    PSendSysMessage("Pet's tp changed to %u", tp);
     return true;
 }
 

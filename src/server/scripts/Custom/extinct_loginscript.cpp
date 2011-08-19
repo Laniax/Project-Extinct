@@ -5,7 +5,7 @@
 class extinct_loginscript : public PlayerScript
 {
     public:
-        extinct_pvp() : PlayerScript("extinct_loginscript") { }
+        extinct_loginscript() : PlayerScript("extinct_loginscript") { }
 
             void OnLogin(Player * pPlayer)
             {

@@ -43,17 +43,9 @@ public:
             { "",               SEC_MODERATOR,      false, &HandleGMCommand,                  "", NULL },
             { NULL,             0,                  false, NULL,                              "", NULL }
         };
-
-		static ChatCommand devCommandTable[] =
-		{
-			{ "",               SEC_MODERATOR,      false, &HandleDevCommand,                 "", NULL },
-			{ NULL,             0,                  false, NULL,                              "", NULL }
-		};
-
         static ChatCommand commandTable[] =
         {
             { "gm",             SEC_MODERATOR,      false, NULL,                     "", gmCommandTable },
-			{ "dev",            SEC_MODERATOR,      false, NULL,                     "", devCommandTable },
             { NULL,             0,                  false, NULL,                               "", NULL }
         };
         return commandTable;
@@ -97,7 +89,7 @@ public:
         if (!*args)
             return false;
 
-        Player *target =  handler->getSelectedPlayer();
+        Player* target =  handler->getSelectedPlayer();
         if (!target)
             target = handler->GetSession()->GetPlayer();
 
@@ -128,7 +120,7 @@ public:
         for (HashMapHolder<Player>::MapType::const_iterator itr = m.begin(); itr != m.end(); ++itr)
         {
             AccountTypes itr_sec = itr->second->GetSession()->GetSecurity();
-            if ((itr->second->isGameMaster() || (itr_sec > SEC_DONOR_TWO && itr_sec <= AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
+            if ((itr->second->isGameMaster() || (itr_sec > SEC_PLAYER && itr_sec <= AccountTypes(sWorld->getIntConfig(CONFIG_GM_LEVEL_IN_GM_LIST)))) &&
                 (!handler->GetSession() || itr->second->IsVisibleGloballyFor(handler->GetSession()->GetPlayer())))
             {
                 if (first)
@@ -236,7 +228,7 @@ public:
 
         if (argstr == "on")
         {
-                handler->GetSession()->GetPlayer()->SetGameMaster(true,false);
+            handler->GetSession()->GetPlayer()->SetGameMaster(true);
             handler->GetSession()->SendNotification(LANG_GM_ON);
             handler->GetSession()->GetPlayer()->UpdateTriggerVisibility();
 #ifdef _DEBUG_VMAPS
@@ -248,52 +240,8 @@ public:
 
         if (argstr == "off")
         {
-            handler->GetSession()->GetPlayer()->SetGameMaster(false,false);
+            handler->GetSession()->GetPlayer()->SetGameMaster(false);
             handler->GetSession()->SendNotification(LANG_GM_OFF);
-            handler->GetSession()->GetPlayer()->UpdateTriggerVisibility();
-#ifdef _DEBUG_VMAPS
-            VMAP::IVMapManager *vMapManager = VMAP::VMapFactory::createOrGetVMapManager();
-            vMapManager->processCommand("startlog");
-#endif
-            return true;
-        }
-
-        handler->SendSysMessage(LANG_USE_BOL);
-        handler->SetSentErrorMessage(true);
-        return false;
-    }
-
-
-    //Enable\Disable DEV Mode
-    static bool HandleDevCommand(ChatHandler* handler, const char* args)
-    {
-        if (!*args)
-        {
-            if (handler->GetSession()->GetPlayer()->isGameMaster())
-                handler->GetSession()->SendNotification(LANG_DEV_ON);
-            else
-                handler->GetSession()->SendNotification(LANG_DEV_OFF);
-            return true;
-        }
-
-        std::string argstr = (char*)args;
-
-        if (argstr == "on")
-        {
-            handler->GetSession()->GetPlayer()->SetGameMaster(true, true);
-            handler->GetSession()->SendNotification(LANG_DEV_ON);
-            handler->GetSession()->GetPlayer()->UpdateTriggerVisibility();
-#ifdef _DEBUG_VMAPS
-            VMAP::IVMapManager *vMapManager = VMAP::VMapFactory::createOrGetVMapManager();
-            vMapManager->processCommand("stoplog");
-#endif
-            return true;
-        }
-
-        if (argstr == "off")
-        {
-            handler->GetSession()->GetPlayer()->SetGameMaster(false, true);
-            handler->GetSession()->SendNotification(LANG_DEV_OFF);
             handler->GetSession()->GetPlayer()->UpdateTriggerVisibility();
 #ifdef _DEBUG_VMAPS
             VMAP::IVMapManager *vMapManager = VMAP::VMapFactory::createOrGetVMapManager();

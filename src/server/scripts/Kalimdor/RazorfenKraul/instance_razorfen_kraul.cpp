@@ -59,8 +59,8 @@ public:
             {
                 for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
                 {
-                    if (Player* plr = itr->getSource())
-                        return plr;
+                    if (Player* player = itr->getSource())
+                        return player;
                 }
             }
             sLog->outDebug(LOG_FILTER_TSCR, "TSCR: Instance Razorfen Kraul: GetPlayerInMap, but PlayerList is empty!");
@@ -85,7 +85,7 @@ public:
                 }
         }
 
-        void SetData(uint32 type, uint32 data)
+        void SetData(uint32 type, uint32 /*data*/)
         {
             switch(type)
             {

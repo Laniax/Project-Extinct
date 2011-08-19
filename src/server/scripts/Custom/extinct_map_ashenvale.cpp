@@ -330,7 +330,7 @@ class ashenvale_mall_alliance_boss : public CreatureScript
         }
 };
 
-void AddSC_Ashenvale_scripts()
+void AddSC_extinct_ashenvale_scripts()
 {
     new AshenvaleMallScript();
     new ashenvale_mall_horde_boss();

@@ -10,12 +10,12 @@
 
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
-Custom/extinct_pvp.cpp
-Custom/keep_out.cpp
-Custom/mall_dummy_mage.cpp
-Custom/mall_pets.cpp
-Custom/mall_proff.cpp
-Custom/extinct_ashenvale.cpp
+  Custom/extinct_loginscript.cpp
+  Custom/extinct_map_ashenvale.cpp
+  Custom/extinct_pet_cages.cpp
+  Custom/extinct_profession_o_matic.cpp
+  Custom/extinct_mall_npcs.cpp
+  Custom/extinct_restrictions.cpp
 )
 
 message("  -> Prepared: Custom")

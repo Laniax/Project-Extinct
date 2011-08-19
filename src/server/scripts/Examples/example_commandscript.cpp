@@ -31,63 +31,23 @@ EndScriptData */
 
 // **** Script Info ****
 // This script's primary purpose is to show just how much you can really do with commandscripts
-enum 
-{
-	EVENT_TOKEN		= 32569,
-	GM_ROBE			= 2586,
-	GM_SLIPPERS		= 11508,
-	GM_HOOD			= 12064,
-};
 
 class example_commandscript : public CommandScript
 {
     public:
         example_commandscript() : CommandScript("example_commandscript") { }
 
-        static bool HandleGiveTokenCommand(ChatHandler* handler, const char* args)
+        static bool HandleHelloWorldCommand(ChatHandler* handler, const char* /*args*/)
         {
-			if (!*args) 
-				return false;
-
-			Player* target = handler->getSelectedPlayer();
-
-			char* ccount = strtok ((char*) args, " ");
-			int32 count = atoi (ccount);
-
-			if (!target) 
-            target = handler->GetSession()->GetPlayer(); // Geen target? target = self
-
-			if (count == 0)
-				return false;
-
-			//Subtract
-			if (count < 0)
-			{
-				target->DestroyItemCount(EVENT_TOKEN, -count, true, false);
-				handler->PSendSysMessage(LANG_REMOVEITEM, EVENT_TOKEN, -count, handler->GetNameLink(target).c_str());
-				return true;
-			}
-
-			target->AddItem(EVENT_TOKEN, count);
-            
+            handler->PSendSysMessage("Hello World");
             return true;
         }
-
-		 static bool HandleGiveOutfitCommand(ChatHandler* handler, const char* args)
-		 {
-			 Player* player = handler->GetSession()->GetPlayer();
-			 player->AddItem(GM_ROBE,1);
-			 player->AddItem(GM_SLIPPERS,1);
-			 player->AddItem(GM_HOOD,1);
-			 return true;
-		 }
 
         ChatCommand* GetCommands() const
         {
             static ChatCommand HelloWorldCommandTable[] =
             {
-                { "givetoken",      SEC_TRIAL_GM,   true,   &HandleGiveTokenCommand,             "", NULL },
-				{ "gmoutfit",       SEC_TRIAL_GM,   true,   &HandleGiveOutfitCommand,            "", NULL },
+                { "hello",          SEC_PLAYER,         true,   &HandleHelloWorldCommand,        "", NULL },
                 { NULL,             0,                  false,  NULL,                            "", NULL }
             };
             return HelloWorldCommandTable;

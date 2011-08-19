@@ -338,8 +338,6 @@ enum TrinityStrings
     LANG_TITLE_CURRENT_RES              = 355,
     LANG_CURRENT_TITLE_RESET            = 356,
     // Room for more level 2              357-399 not used
-    LANG_DEV_ON                         = 357,
-    LANG_DEV_OFF                        = 358,
 
     // level 3 chat
     LANG_SCRIPTS_RELOADED               = 400,
@@ -833,8 +831,8 @@ enum TrinityStrings
     LANG_BG_IC_REFINERY                 = 1222,
     LANG_BG_IC_QUARRY                   = 1223,
     LANG_BG_IC_HANGAR                   = 1224,
-    LANG_BG_IC_ALLIANCE                 = 1225,
-    LANG_BG_IC_HORDE                    = 1226,
+    LANG_BG_IC_ALLIANCE                 = 1300,
+    LANG_BG_IC_HORDE                    = 1301,
 
     // FREE IDS                           1228-9999
 
