@@ -159,8 +159,7 @@ enum AccountTypes
     SEC_PLAYER         = 0,
 
     // Introduction
-    ACC_IN_INTRO, // not used
-    ACC_OUT_INTRO, // not used
+    ACC_INTRO_DONE, // not used
 
     // Comatose
     ACC_COMA_LOCKED, // not used

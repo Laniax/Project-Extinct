@@ -16,6 +16,7 @@ set(scripts_STAT_SRCS
   Custom/extinct_profession_o_matic.cpp
   Custom/extinct_mall_npcs.cpp
   Custom/extinct_restrictions.cpp
+  Custom/extinct_introduction.cpp
 )
 
 message("  -> Prepared: Custom")
