@@ -23,6 +23,7 @@
 #include "Opcodes.h"
 #include "Log.h"
 #include "Player.h"
+#include "extinct.h"
 #include "GossipDef.h"
 #include "World.h"
 #include "ObjectMgr.h"
@@ -930,6 +931,12 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
     if (OutdoorPvP * pvp = GetPlayer()->GetOutdoorPvP())
     {
         if (pvp->HandleAreaTrigger(_player, Trigger_ID))
+            return;
+    }
+
+    if (GetPlayer()->GetMapId() == MAP_COMATOSE)
+    {
+        if (Extinct::HandleComatoseAreaTrigger(GetPlayer(), Trigger_ID))
             return;
     }
 

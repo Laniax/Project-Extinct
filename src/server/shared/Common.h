@@ -159,14 +159,9 @@ enum AccountTypes
     SEC_PLAYER         = 0,
 
     // Introduction
-    ACC_INTRO_DONE, // not used
-
-    // Comatose
-    ACC_COMA_LOCKED, // not used
-    ACC_COMA_UNLOCKED, // not used
+    ACC_INTRO_DONE,
 
     // Veza
-    ACC_VEZA_LOCKED, // not used
     ACC_VEZA_UNLOCKED, // not used
 
     SEC_MODERATOR,

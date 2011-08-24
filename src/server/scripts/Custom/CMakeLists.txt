@@ -10,6 +10,8 @@
 
 set(scripts_STAT_SRCS
   ${scripts_STAT_SRCS}
+  Custom/extinct.h
+  Custom/extinct.cpp
   Custom/extinct_loginscript.cpp
   Custom/extinct_map_ashenvale.cpp
   Custom/extinct_pet_cages.cpp
