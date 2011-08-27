@@ -6,9 +6,40 @@ enum Spells
     AURA_COMATOSE = 1,
 };
 
+enum EventStartPositions
+{
+    //Awakening
+    AWAKE_X = 1,
+    AWAKE_Y = 1,
+    AWAKE_Z = 1,
+    AWAKE_O = 1,
+    //Invasion
+    INVA_X = 1,
+    INVA_Y = 1,
+    INVA_Z = 1,
+    INVA_O = 1,
+    //Crawl
+    CRAWL_X = 1,
+    CRAWL_Y = 1,
+    CRAWL_Z = 1,
+    CRAWL_O = 1,
+    //Rocket
+    ROCK_X = 1,
+    ROCK_Y = 1,
+    ROCK_Z = 1,
+    ROCK_O = 1,
+    //Camp
+    CAMP_X = 1,
+    CAMP_Y = 1,
+    CAMP_Z = 1,
+    CAMP_O = 1,
+};
+
 class extinct_introduction : public InstanceMapScript
 {
 public:
+
+
     extinct_introduction() : InstanceMapScript("extinct_introduction", MAP_COMATOSE) { }
 
     struct extinct_introduction_InstanceScript : public InstanceScript
@@ -45,27 +76,27 @@ public:
             switch (event)
             {
                 case AWAKENING:
-                    // player->Relocate(float x, float y, float z, float o);
-                    // StartEventAwakening(Player* player);
+                     player->Relocate(AWAKE_X, AWAKE_Y, AWAKE_Z, AWAKE_O);
+                     StartEventAwakening(player);
                     break;
                 case INVASION:
-                    // player->Relocate(float x, float y, float z, float o);
-                    // StartEventInvasion(Player* player);
+                     player->Relocate(INVA_X, INVA_Y, INVA_Z, INVA_O);
+                     StartEventInvasion(player);
                     break;
                 case CRAWL:
-                    // player->Relocate(float x, float y, float z, float o);
-                    // StartEventCrawl(Player* player);
+                     player->Relocate(CRAWL_X, CRAWL_Y, CRAWL_Z, CRAWL_O);
+                     StartEventCrawl(player);
                     break;
                 case ROCKET:
-                    // player->Relocate(float x, float y, float z, float o);
-                    // StartEventRocket(Player* player);
+                     player->Relocate(ROCK_X, ROCK_Y, ROCK_Z, ROCK_O);
+                     StartEventRocket(player);
                     break;
                 case CAMP:
-                    // player->Relocate(float x, float y, float z, float o);
-                    // StartEventCamp(Player* player);
+                     player->Relocate(CAMP_X, CAMP_Y, CAMP_Z, CAMP_O);
+                     StartEventCamp(player);
                     break;
                 case MAX_EVENTS:
-                    // Player has already done intro but was not flagged as done? Hacker?
+                    // Player has already done intro but was not flagged as done? Hacker/Disconnect?
                     WorldLocation mall_location;
                     mall_location.m_mapId       = mall_mapId;
                     mall_location.m_positionX   = mall_positionX;
@@ -77,6 +108,27 @@ public:
                     player->GetSession()->SetSecurity(ACC_INTRO_DONE);
                     break;
             }
+        }
+
+        static void StartEventAwakening(Player* player)
+        {
+            sLog->outError("Player: %d. Triggered: Event Awakening!",player->GetSession()->GetPlayerName());
+        }
+        static void StartEventInvasion(Player* player)
+        {
+            sLog->outError("Player: %d. Triggered: Event Invasion!",player->GetSession()->GetPlayerName());
+        }
+        static void StartEventCrawl(Player* player)
+        {
+            sLog->outError("Player: %d. Triggered: Event Crawl!",player->GetSession()->GetPlayerName());
+        }
+        static void StartEventRocket(Player* player)
+        {
+            sLog->outError("Player: %d. Triggered: Event Rocket!",player->GetSession()->GetPlayerName());
+        }
+        static void StartEventCamp(Player* player)
+        {
+            sLog->outError("Player: %d. Triggered: Event Camp!",player->GetSession()->GetPlayerName());
         }
 
     InstanceScript* GetInstanceScript(InstanceMap *map) const
@@ -103,8 +155,80 @@ class achievement_awakening : public AchievementCriteriaScript
         }
 };
 
+class achievement_invasion : public AchievementCriteriaScript
+{
+    public:
+        achievement_invasion() : AchievementCriteriaScript("achievement_invasion") { }
+
+        bool OnCheck(Player* source, Unit* /*target*/)
+        {
+            if (!source)
+                return false;
+
+            if (Extinct::GetIntroEvent(source) == INVASION)
+                return true;
+
+            return false;
+        }
+};
+
+class achievement_crawl : public AchievementCriteriaScript
+{
+    public:
+        achievement_crawl() : AchievementCriteriaScript("achievement_crawl") { }
+
+        bool OnCheck(Player* source, Unit* /*target*/)
+        {
+            if (!source)
+                return false;
+
+            if (Extinct::GetIntroEvent(source) == CRAWL)
+                return true;
+
+            return false;
+        }
+};
+
+class achievement_rocket : public AchievementCriteriaScript
+{
+    public:
+        achievement_rocket() : AchievementCriteriaScript("achievement_rocket") { }
+
+        bool OnCheck(Player* source, Unit* /*target*/)
+        {
+            if (!source)
+                return false;
+
+            if (Extinct::GetIntroEvent(source) == ROCKET)
+                return true;
+
+            return false;
+        }
+};
+
+class achievement_camp : public AchievementCriteriaScript
+{
+    public:
+        achievement_camp() : AchievementCriteriaScript("achievement_camp") { }
+
+        bool OnCheck(Player* source, Unit* /*target*/)
+        {
+            if (!source)
+                return false;
+
+            if (Extinct::GetIntroEvent(source) == CAMP)
+                return true;
+
+            return false;
+        }
+};
+
 void AddSC_extinct_introduction()
 {
     new extinct_introduction();
     new achievement_awakening();
+    new achievement_invasion();
+    new achievement_crawl();
+    new achievement_rocket();
+    new achievement_camp();
 }

@@ -601,6 +601,7 @@ void AddSC_extinct_mall_petcages();
 void AddSC_extinct_profession_o_matic();
 void AddSC_extinct_mall_npcs();
 void AddSC_extinct_restrictions();
+void AddSC_extinct_introduction();
 
 #endif
 
@@ -1244,6 +1245,7 @@ void AddCustomScripts()
  AddSC_extinct_profession_o_matic();
  AddSC_extinct_mall_npcs();
  AddSC_extinct_restrictions();
+ AddSC_extinct_introduction();
 
 #endif
 }
