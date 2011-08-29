@@ -1,5 +1,6 @@
 
 #include "ScriptPCH.h"
+AchievementEntry const* WELCOME_TO_PROJECT_EXTINCT = GetAchievementStore()->LookupEntry(5000);
 
 class extinct_loginscript : public PlayerScript
 {
@@ -19,6 +20,7 @@ class extinct_loginscript : public PlayerScript
 
                     pPlayer->RewardSpecialty();
                     pPlayer->RemoveAtLoginFlag(AT_LOGIN_FIRST); // en weer removen zodat het volgende login niet gebeurt ;)
+                    pPlayer->GetAchievementMgr().CompletedAchievement(WELCOME_TO_PROJECT_EXTINCT);
                     pPlayer->SaveToDB();
                 }
                 if (pPlayer->GetSession()->GetSecurity() == SEC_PLAYER)

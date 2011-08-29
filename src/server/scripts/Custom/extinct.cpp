@@ -10,27 +10,26 @@ bool Extinct::HandleComatoseAreaTrigger(Player *player, uint32 Trigger)
     {
         //Awakening is triggered in the OnPlayerEnter function.
         case 1: // Awakening Done
+            player->GetAchievementMgr().CompletedAchievement(DEEP_SLUMBER);
             extinct_introduction::extinct_introduction_InstanceScript::StartEventInvasion(player);
-            player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_INTRO_AWAKE);
             CharacterDatabase.PQuery("UPDATE `extinct_introduction` SET `event` = '1' WHERE guid = '%d'", plGUID);
             return true; break;
         case 2: // Invasion Done
             extinct_introduction::extinct_introduction_InstanceScript::StartEventCrawl(player);
-            player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_INTRO_SURVIVE_INVASION);
             CharacterDatabase.PQuery("UPDATE `extinct_introduction` SET `event` = '2' WHERE guid = '%d'", plGUID);
             return true; break;
         case 3: // Crawl Done
+            player->GetAchievementMgr().CompletedAchievement(STILL_KICKIN);
             extinct_introduction::extinct_introduction_InstanceScript::StartEventRocket(player);
-            player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_INTRO_CRAWL_TO_FREEDOM);
             CharacterDatabase.PQuery("UPDATE `extinct_introduction` SET `event` = '3' WHERE guid = '%d'", plGUID);
             return true; break;
         case 4: // Rocket Done
+            player->GetAchievementMgr().CompletedAchievement(TO_INFINITY_AND_BEYOND);
             extinct_introduction::extinct_introduction_InstanceScript::StartEventCamp(player);
-            player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_INTRO_ROCKET_RIDE);
             CharacterDatabase.PQuery("UPDATE `extinct_introduction` SET `event` = '4' WHERE guid = '%d'", plGUID);
             return true; break;
         case 5: // Camp Done
-            player->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_INTRO_REACH_CAMP);
+            player->GetAchievementMgr().CompletedAchievement(LIKE_A_BAD_BOND_MOVIE);
             CharacterDatabase.PQuery("UPDATE `extinct_introduction` SET `event` = '5' WHERE guid = '%d'", plGUID);
             player->GetSession()->SetSecurity(ACC_INTRO_DONE);
             return true; break;

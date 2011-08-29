@@ -1,4 +1,4 @@
-#define MAP_COMATOSE        726
+#define MAP_COMATOSE        725
 
 enum Mall_Position
 {
@@ -19,6 +19,11 @@ enum IntroEvents
     CAMP,
     MAX_EVENTS,
 };
+
+AchievementEntry const* DEEP_SLUMBER = GetAchievementStore()->LookupEntry(5001);
+AchievementEntry const* STILL_KICKIN = GetAchievementStore()->LookupEntry(5002);
+AchievementEntry const* TO_INFINITY_AND_BEYOND = GetAchievementStore()->LookupEntry(5003);
+AchievementEntry const* LIKE_A_BAD_BOND_MOVIE = GetAchievementStore()->LookupEntry(5004);
 
 class Extinct
 {

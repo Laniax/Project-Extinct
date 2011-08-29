@@ -3,42 +3,49 @@
 
 enum Spells
 {
-    AURA_COMATOSE = 1,
+    AURA_COMATOSE            = 1, //TBM (to be made)
+    SPELL_SLEEP              = 52742,
+    SPELL_CAMERA_SHAKE       = 44681,
 };
 
-enum EventStartPositions
+const Position EventStartPositions[5] =
 {
     //Awakening
-    AWAKE_X = 1,
-    AWAKE_Y = 1,
-    AWAKE_Z = 1,
-    AWAKE_O = 1,
+    {6195.070801f, 6318.850586f, 9.848952f, 4.885195f},
     //Invasion
-    INVA_X = 1,
-    INVA_Y = 1,
-    INVA_Z = 1,
-    INVA_O = 1,
+    {1f, 0f, 0f, 0f},
     //Crawl
-    CRAWL_X = 1,
-    CRAWL_Y = 1,
-    CRAWL_Z = 1,
-    CRAWL_O = 1,
+    {1f, 0f, 0f, 0f},
     //Rocket
-    ROCK_X = 1,
-    ROCK_Y = 1,
-    ROCK_Z = 1,
-    ROCK_O = 1,
+    {1f, 1f, 1f, 1f},
     //Camp
-    CAMP_X = 1,
-    CAMP_Y = 1,
-    CAMP_Z = 1,
-    CAMP_O = 1,
+    {1f, 1f, 1f, 1f},
+};
+
+Position const AwakeningAreaTrigger = {6195.070801f, 6318.850586f, 9.848952f, 4.885195f}; //fake coords, trigger TBM (to be made)
+
+class StandUpEvent : public BasicEvent
+{
+    public:
+        StandUpEvent(Player* player) : BasicEvent(), _player(player) { }
+
+        bool Execute(uint64 /*eventTime*/, uint32 /*diff*/)
+        {
+            //trigger custom animation: SLEEP_UP + Hard walk slowly tweening into crawling.
+            _player->GetMotionMaster()->MovePoint(0, AwakeningAreaTrigger); //then trigger a walk to the areatrigger.
+            _player->CastSpell(_player, SPELL_CAMERA_SHAKE,1);
+
+            //areatrigger will take it from there ;)
+            return true;
+        }
+
+    private:
+        Player* _player;
 };
 
 class extinct_introduction : public InstanceMapScript
 {
 public:
-
 
     extinct_introduction() : InstanceMapScript("extinct_introduction", MAP_COMATOSE) { }
 
@@ -50,10 +57,7 @@ public:
         void Load(const char* instance)
         {
             if (!instance)
-            {
-                //player->SendTransferAborted(MAP_COMATOSE, TRANSFER_ABORT_NOT_FOUND);
                 return;
-            }
         }
 
         void OnPlayerEnter(Player* player)
@@ -76,23 +80,23 @@ public:
             switch (event)
             {
                 case AWAKENING:
-                     player->Relocate(AWAKE_X, AWAKE_Y, AWAKE_Z, AWAKE_O);
+                     player->Relocate(EventStartPositions[0]);
                      StartEventAwakening(player);
                     break;
                 case INVASION:
-                     player->Relocate(INVA_X, INVA_Y, INVA_Z, INVA_O);
+                     player->Relocate(EventStartPositions[1]);
                      StartEventInvasion(player);
                     break;
                 case CRAWL:
-                     player->Relocate(CRAWL_X, CRAWL_Y, CRAWL_Z, CRAWL_O);
+                     player->Relocate(EventStartPositions[2]);
                      StartEventCrawl(player);
                     break;
                 case ROCKET:
-                     player->Relocate(ROCK_X, ROCK_Y, ROCK_Z, ROCK_O);
+                     player->Relocate(EventStartPositions[3]);
                      StartEventRocket(player);
                     break;
                 case CAMP:
-                     player->Relocate(CAMP_X, CAMP_Y, CAMP_Z, CAMP_O);
+                     player->Relocate(EventStartPositions[4]);
                      StartEventCamp(player);
                     break;
                 case MAX_EVENTS:
@@ -113,6 +117,11 @@ public:
         static void StartEventAwakening(Player* player)
         {
             sLog->outError("Player: %d. Triggered: Event Awakening!",player->GetSession()->GetPlayerName());
+
+            player->SetClientControl(player, 0);   //player will not be able to move - script generated movement instead.
+            player->CastSpell(player, SPELL_SLEEP, 1);
+            player->Say("What.. whe.. where am I?", LANG_UNIVERSAL);
+            player->m_Events.AddEvent(new StandUpEvent(*player), player->m_Events.CalculateTime(2000)); // 2 sec
         }
         static void StartEventInvasion(Player* player)
         {
@@ -138,97 +147,7 @@ public:
     };
 };
 
-class achievement_awakening : public AchievementCriteriaScript
-{
-    public:
-        achievement_awakening() : AchievementCriteriaScript("achievement_awakening") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source)
-                return false;
-
-            if (Extinct::GetIntroEvent(source) == AWAKENING)
-                return true;
-
-            return false;
-        }
-};
-
-class achievement_invasion : public AchievementCriteriaScript
-{
-    public:
-        achievement_invasion() : AchievementCriteriaScript("achievement_invasion") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source)
-                return false;
-
-            if (Extinct::GetIntroEvent(source) == INVASION)
-                return true;
-
-            return false;
-        }
-};
-
-class achievement_crawl : public AchievementCriteriaScript
-{
-    public:
-        achievement_crawl() : AchievementCriteriaScript("achievement_crawl") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source)
-                return false;
-
-            if (Extinct::GetIntroEvent(source) == CRAWL)
-                return true;
-
-            return false;
-        }
-};
-
-class achievement_rocket : public AchievementCriteriaScript
-{
-    public:
-        achievement_rocket() : AchievementCriteriaScript("achievement_rocket") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source)
-                return false;
-
-            if (Extinct::GetIntroEvent(source) == ROCKET)
-                return true;
-
-            return false;
-        }
-};
-
-class achievement_camp : public AchievementCriteriaScript
-{
-    public:
-        achievement_camp() : AchievementCriteriaScript("achievement_camp") { }
-
-        bool OnCheck(Player* source, Unit* /*target*/)
-        {
-            if (!source)
-                return false;
-
-            if (Extinct::GetIntroEvent(source) == CAMP)
-                return true;
-
-            return false;
-        }
-};
-
 void AddSC_extinct_introduction()
 {
     new extinct_introduction();
-    new achievement_awakening();
-    new achievement_invasion();
-    new achievement_crawl();
-    new achievement_rocket();
-    new achievement_camp();
 }
