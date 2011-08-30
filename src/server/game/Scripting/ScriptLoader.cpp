@@ -602,6 +602,7 @@ void AddSC_extinct_profession_o_matic();
 void AddSC_extinct_mall_npcs();
 void AddSC_extinct_restrictions();
 void AddSC_extinct_introduction();
+void AddSC_extinct_commandscript();
 
 #endif
 
@@ -1238,7 +1239,6 @@ void AddCustomScripts()
 {
 #ifdef SCRIPTS
     /* This is where custom scripts should be added. */
-
  AddSC_extinct_loginscript();
  AddSC_extinct_ashenvale_scripts();
  AddSC_extinct_mall_petcages();
@@ -1246,6 +1246,7 @@ void AddCustomScripts()
  AddSC_extinct_mall_npcs();
  AddSC_extinct_restrictions();
  AddSC_extinct_introduction();
+ AddSC_extinct_commandscript();
 
 #endif
 }

@@ -19,6 +19,7 @@ set(scripts_STAT_SRCS
   Custom/extinct_mall_npcs.cpp
   Custom/extinct_restrictions.cpp
   Custom/extinct_introduction.cpp
+  Custom/extinct_commandscript.cpp
 )
 
 message("  -> Prepared: Custom")
