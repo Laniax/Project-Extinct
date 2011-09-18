@@ -51,7 +51,7 @@ class extinct_commandscript : public CommandScript
              Player* player = handler->GetSession()->GetPlayer();
              Player* target = handler->getSelectedPlayer();
 
-             if (target->GetSession()->GetSecurity() == SEC_GAMEMASTER)
+             if (target->GetSession()->GetSecurity() >= SEC_GAMEMASTER)
              {
                  player->AddItem(GM_ROBE,1);
                  player->AddItem(GM_SLIPPERS,1);
